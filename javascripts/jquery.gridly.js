@@ -2,7 +2,7 @@
 /*
 jQuery Gridly
 Copyright 2013 Kevin Sylvestre
-1.2.2
+1.2.3
 */
 
 
@@ -168,7 +168,8 @@ Copyright 2013 Kevin Sylvestre
       gutter: 20,
       columns: 12,
       draggable: {
-        zIndex: 800
+        zIndex: 800,
+        selector: '> *'
       }
     };
 
@@ -248,7 +249,7 @@ Copyright 2013 Kevin Sylvestre
 
     Gridly.prototype.draggable = function(method) {
       if (this._draggable == null) {
-        this._draggable = new Draggable(this.$el, '> *', {
+        this._draggable = new Draggable(this.$el, this.settings.draggable.selector, {
           began: this.draggingBegan,
           ended: this.draggingEnded,
           moved: this.draggingMoved
@@ -308,8 +309,8 @@ Copyright 2013 Kevin Sylvestre
 
     Gridly.prototype.draggingMoved = function(event) {
       var $dragging, $elements, element, i, index, original, positions, _i, _j, _len, _ref, _ref1, _ref2;
-      $dragging = $(event.target).closest(this.$('> *'));
-      $elements = this.$sorted();
+      $dragging = $(event.target).closest(this.$(this.settings.draggable.selector));
+      $elements = this.$sorted(this.$(this.settings.draggable.selector));
       positions = this.structure($elements).positions;
       original = index = $dragging.data('position');
       _ref = positions.filter(function(position) {
